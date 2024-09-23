@@ -1,9 +1,9 @@
 # Aplicar as Configurações no Kubernetes
 
-kubectl apply -f redis-exporter-configmap.yaml
-kubectl apply -f redis-exporter-deployment.yaml
-kubectl apply -f redis-exporter-service.yaml
-kubectl apply -f redis-exporter-servicemonitor.yaml
+kubectl apply -f configmap.yaml
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl apply -f servicemonitor.yaml
 
 # Verificar a Configuração
 
@@ -12,6 +12,6 @@ kubectl get services -n kube-prometheus-stack
 
 # Para verificar se as métricas estão sendo coletadas, você pode usar o port-forward:
 
-kubectl port-forward svc/redis-exporter-service -n kube-prometheus-stack 9121:9121
+kubectl port-forward svc/service -n kube-prometheus-stack 9121:9121
 
 E então acessar http://localhost:9121/metrics para ver as métricas expostas.
