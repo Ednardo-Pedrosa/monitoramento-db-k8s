@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-exporter-deployment
+  namespace: kube-prometheus-stack
+  labels:
+    app: postgres-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-exporter
+  template:
+    metadata:
+      labels:
+        app: postgres-exporter
+    spec:
+      containers:
+      - name: postgres-exporter
+        image: quay.io/prometheuscommunity/postgres-exporter:latest
+        ports:
+        - containerPort: 9187
+        env:
+        - name: DATA_SOURCE_NAME
+          value: "postgresql://user:password@host:5432/postgres?sslmode=disable"  # Atualize com as credenciais do PostgreSQL
+        volumeMounts:
+        - name: query-config
+          mountPath: /etc/postgres-exporter/queries.yaml
+          subPath: queries.yaml
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+      volumes:
+      - name: query-config
+        configMap:
+          name: postgres-exporter-configmap

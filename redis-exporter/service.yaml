@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-exporter-service
+  namespace: kube-prometheus-stack
+  labels:
+    app: redis-exporter
+spec:
+  ports:
+  - name: http
+    port: 9121
+    targetPort: 9121
+  selector:
+    app: redis-exporter
+  type: ClusterIP

@@ -1,0 +1,15 @@
+# Aplicar as Configurações no Kubernetes
+
+kubectl apply -f configmap.yaml
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl apply -f servicemonitor.yaml  # Se estiver utilizando o ServiceMonitor
+
+# Verificar a Configuração
+
+kubectl get pods -n kube-prometheus-stack
+kubectl get services -n kube-prometheus-stack
+
+# Para verificar se as métricas estão sendo coletadas, você pode usar o port-forward:
+
+kubectl port-forward svc/service -n kube-prometheus-stack 9187:9187

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-exporter-configmap
+  namespace: kube-prometheus-stack
+data:
+  queries.yaml: |
+    pg_database: |
+      SELECT datname, numbackends, xact_commit, xact_rollback
+      FROM pg_stat_database;
+
+    pg_stat_statements: |
+      SELECT datname, queryid, query, calls, total_time, rows
+      FROM pg_stat_statements;
